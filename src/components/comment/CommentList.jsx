@@ -1,9 +1,14 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import CommentItem from './CommentItem';
 
-const CommentList = () => (
+const CommentList = ({ comments }) => (
   <div className="comments__list">
-    <CommentItem />
+    {
+      comments.map((comment) => (
+        <CommentItem key={comment.id} {...comment} />
+      ))
+    }
   </div>
 );
 

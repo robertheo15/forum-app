@@ -34,10 +34,10 @@ function toggleLikeThreadActionCreator({ threadId, userId }) {
   };
 }
 
-function asyncAddThread({ text, replyTo = '' }) {
+function asyncAddThread({ title, category, body }) {
   return async (dispatch) => {
     try {
-      const thread = await api.createThread({ text, replyTo });
+      const thread = await api.createThread({ title, category, body });
       dispatch(addThreadActionCreator(thread));
     } catch (error) {
       alert(error.message);

@@ -5,16 +5,11 @@ import CommentList from '../comment/CommentList';
 
 const ThreadDetailComment = ({ authUser, detail }) => {
   const { comments } = detail;
-  console.log(comments);
   if (authUser === null || authUser === undefined) {
     return (
       <div className="thread-comment">
         <div className="thread-comment__input">
           <h3>Beri komentar</h3>
-          {/* <form className="comment-input">
-            <div className="comment-input__field" />
-            <button type="submit">Kirim</button>
-          </form> */}
           <p className="thread-comment__not_login">
             <Link to="/login">
               Login
@@ -24,9 +19,9 @@ const ThreadDetailComment = ({ authUser, detail }) => {
           </p>
         </div>
         <div className="thread-comment__list">
-          <h3>Komentar (0)</h3>
+          <h3>{`Komentar (${comments.length})`}</h3>
         </div>
-        <CommentList />
+        <CommentList comments={comments} />
       </div>
     );
   }
@@ -38,12 +33,11 @@ const ThreadDetailComment = ({ authUser, detail }) => {
           <div className="comment-input__field" />
           <button type="submit">Kirim</button>
         </form>
-        <p className="thread-comment__not_login">Login untuk memberi komentar</p>
       </div>
       <div className="thread-comment__list">
-        <h3>Komentar (0)</h3>
+        <h3>{`Komentar (${comments.length})`}</h3>
       </div>
-      <CommentList />
+      <CommentList comments={comments} />
     </div>
   );
 };

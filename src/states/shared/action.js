@@ -1,6 +1,7 @@
 import api from '../../utils/api';
 import { receiveThreadsActionCreator } from '../threads/action';
 import { receiveUsersActionCreator } from '../users/action';
+import { receiveLeaderboardsActionCreator } from '../leaderoards/action';
 
 function asyncPopulateUsersAndThreads() {
   return async (dispatch) => {
@@ -15,4 +16,15 @@ function asyncPopulateUsersAndThreads() {
   };
 }
 
-export { asyncPopulateUsersAndThreads };
+function asyncPopulateLeaderboards() {
+  return async (dispatch) => {
+    try {
+      const { leaderboards } = await api.getLeaderboard();
+      dispatch(receiveLeaderboardsActionCreator(leaderboards.leaderboards));
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+}
+
+export { asyncPopulateUsersAndThreads, asyncPopulateLeaderboards };

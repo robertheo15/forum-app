@@ -58,12 +58,10 @@ const api = (() => {
     }
   };
 
-  const createThread = async ({ title, body, category }) => {
+  const createThread = async ({ title, category, body }) => {
     try {
       const response = await axios.post(`${BASE_URL}/threads`, {
-        title,
-        body,
-        category,
+        title, category, body,
       }, setAuthorization);
       return { error: false, data: response.data };
     } catch (error) {
@@ -156,8 +154,8 @@ const api = (() => {
 
   const getLeaderboard = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/leaderboards`, setAuthorization);
-      return { error: false, data: response.data };
+      const { data } = await axios.get(`${BASE_URL}/leaderboards`, setAuthorization);
+      return { error: false, leaderboards: data.data };
     } catch (error) {
       return { error: true, data: null };
     }

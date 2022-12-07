@@ -1,18 +1,24 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
+import parser from 'html-react-parser';
+import postedAt from '../../utils';
 import ActionButton from '../action/ActionButton';
 
-const CommentItem = () => (
+const CommentItem = ({
+  id, content, owner, createdAt, downVotesBy, upVotesBy,
+}) => (
   <div className="comment-item">
     <header className="comment-item__header">
       <div className="comment-item__owner-info">
-        <img src="https://ui-avatars.com/api/?name=reviewer&background=random" alt="adsd" />
+        <img src={`${owner.avatar}`} alt="avatar" />
         <p>reviewer</p>
       </div>
-      <p className="posted-at">3 jam lalu</p>
+      <p className="posted-at">{postedAt(createdAt)}</p>
     </header>
-    <p>Mantap!</p>
+    <p>{parser(content)}</p>
     <footer>
-      <ActionButton />
+      <ActionButton upVotesCount={upVotesBy.length} downVotesCount={downVotesBy.length} />
     </footer>
   </div>
 );

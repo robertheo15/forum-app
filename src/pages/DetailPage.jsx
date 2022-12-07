@@ -24,7 +24,6 @@ const DetailPage = () => {
     return null;
   }
   console.log(authUser);
-  console.log(threadDetail);
   return (
     <section className="detail-page">
       <ThreadDetailHeader detail={threadDetail} />

@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
-const LeaderboardItem = () => (
-  <div className="leaderboard-item">
-    <div className="leaderboard-item__user-info">
-      <img src="https://ui-avatars.com/api/?name=Felix Joe&background=random" alt="asd" />
-      <p>Robert Theo</p>
+const LeaderboardItem = ({ user, score }) => {
+  const { name, avatar } = user;
+  return (
+    <div className="leaderboard-item">
+      <div className="leaderboard-item__user-info">
+        <img src={avatar} alt="avatar" />
+        <p>{name}</p>
+      </div>
+      <p className="leaderboard-item__score">{score}</p>
     </div>
-    <p className="leaderboard-item__score">70</p>
-  </div>
-);
-
+  );
+};
 export default LeaderboardItem;

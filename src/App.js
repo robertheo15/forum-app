@@ -18,11 +18,6 @@ const App = () => {
     dispatch(asyncUnsetAuthUser());
   };
 
-  // console.log(authUser);
-  // console.log(threads);
-  // console.log(users);
-  // console.log(threadList);
-
   if (authUser === null || authUser === undefined) {
     return (
       <div className="app">

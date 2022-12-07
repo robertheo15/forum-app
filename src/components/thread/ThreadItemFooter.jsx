@@ -4,12 +4,17 @@ import { BiCommentDetail } from 'react-icons/bi';
 import ActionButton from '../action/ActionButton';
 import postedAt from '../../utils';
 
-const ThreadFooter = ({ user, createdAt }) => (
+const ThreadItemFooter = ({
+  user, createdAt, totalComments, upVotesBy, downVotesBy,
+}) => (
   <footer className="thread-item__footer">
-    <ActionButton />
+    <ActionButton
+      upVotesCount={(upVotesBy === undefined) ? 0 : upVotesBy.length}
+      downVotesCount={(downVotesBy === undefined) ? 0 : downVotesBy.length}
+    />
     <p className="thread-item__total-comments">
       <BiCommentDetail />
-      0
+      {totalComments}
     </p>
     <p>{postedAt(createdAt)}</p>
     <p className="thread-item__owner">
@@ -19,4 +24,4 @@ const ThreadFooter = ({ user, createdAt }) => (
   </footer>
 );
 
-export default ThreadFooter;
+export default ThreadItemFooter;

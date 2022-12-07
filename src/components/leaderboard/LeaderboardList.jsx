@@ -1,11 +1,16 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import LeaderboardHeader from './LeaderboardHeader';
 import LeaderboardItem from './LeaderboardItem';
 
-const LeaderboardList = () => (
+const LeaderboardList = ({ leaderboardList }) => (
   <div className="leaderboards-list">
     <LeaderboardHeader />
-    <LeaderboardItem />
+    {
+      leaderboardList.map((leaderboard) => (
+        <LeaderboardItem key={leaderboard.id} {...leaderboard} />
+      ))
+    }
   </div>
 );
 

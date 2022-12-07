@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { useNavigate } from 'react-router-dom';
 import { IoMdAddCircle } from 'react-icons/io';
 // import PropTypes from 'prop-types';
 import CategoryList from '../components/category/CategoryList';
 import ThreadList from '../components/thread/ThreadList';
+import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 
 // eslint-disable-next-line react/prop-types
-const HomePage = ({ user, threadList }) => {
+const HomePage = ({ authUser }) => {
+  const {
+    threads = [],
+    users = [],
+  } = useSelector((states) => states);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPopulateUsersAndThreads());
+  }, [dispatch]);
+
+  const threadList = threads.map((thread) => ({
+    ...thread,
+    user: users.find((user) => user.id === thread.ownerId),
+  }));
 
   const onAddPage = () => {
     navigate('/new');
@@ -21,7 +39,7 @@ const HomePage = ({ user, threadList }) => {
         <ThreadList threadList={threadList} />
       </div>
       {
-        (user === null || user === undefined) ? ''
+        (authUser === null || authUser === undefined) ? ''
           : (
             <button type="button" className="new-thread-button" onClick={onAddPage}>
               <IoMdAddCircle />

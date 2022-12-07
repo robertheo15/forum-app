@@ -6,6 +6,7 @@ const ActionType = {
 };
 
 function setAuthUserActionCreator(authUser) {
+  localStorage.setItem('user', JSON.stringify(authUser));
   return {
     type: ActionType.SET_AUTH_USER,
     payload: {
@@ -15,6 +16,7 @@ function setAuthUserActionCreator(authUser) {
 }
 
 function unsetAuthUserActionCreator() {
+  localStorage.setItem('user', '');
   return {
     type: ActionType.UNSET_AUTH_USER,
     payload: {
