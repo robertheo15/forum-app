@@ -30,6 +30,8 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "react/jsx-props-no-spreading": "off",
+        "react/require-default-props": ["off"],
+        "react/default-props-match-prop-types": ["error"],
         "react/function-component-definition": [
             2,
             {
