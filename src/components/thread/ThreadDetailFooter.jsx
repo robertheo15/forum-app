@@ -1,8 +1,8 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import postedAt from '../../utils';
-// import { BiCommentDetail } from 'react-icons/bi';
 import ActionButton from '../action/ActionButton';
+import { detailDTO } from '../../utils/dto';
 
 const ThreadDetailFooter = ({ detail }) => {
   const {
@@ -23,4 +23,8 @@ const ThreadDetailFooter = ({ detail }) => {
     </footer>
   );
 };
+ThreadDetailFooter.propTypes = {
+  detail: PropTypes.shape(detailDTO),
+};
+
 export default ThreadDetailFooter;

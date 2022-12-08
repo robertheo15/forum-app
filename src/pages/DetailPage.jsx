@@ -5,7 +5,7 @@ import ThreadDetailHeader from '../components/thread/ThreadDetailHeader';
 import ThreadDetailContent from '../components/thread/ThreadDetailContent';
 import ThreadDetailFooter from '../components/thread/ThreadDetailFooter';
 import ThreadDetailComment from '../components/thread/ThreadDetailComment';
-import { asyncReceiveThreadDetail } from '../states/detailThread/action';
+import { asyncReceiveThreadDetail, asyncAddComment } from '../states/detailThread/action';
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -20,16 +20,24 @@ const DetailPage = () => {
     dispatch(asyncReceiveThreadDetail(id));
   }, [id, dispatch]);
 
+  const onCreateComment = ({ content }) => {
+    dispatch(asyncAddComment({ id, content }));
+    dispatch(asyncReceiveThreadDetail(id));
+  };
+
   if (!threadDetail) {
     return null;
   }
-  console.log(authUser);
   return (
     <section className="detail-page">
       <ThreadDetailHeader detail={threadDetail} />
       <ThreadDetailContent detail={threadDetail} />
       <ThreadDetailFooter detail={threadDetail} />
-      <ThreadDetailComment authUser={authUser} detail={threadDetail} />
+      <ThreadDetailComment
+        onCreateComment={onCreateComment}
+        authUser={authUser}
+        detail={threadDetail}
+      />
     </section>
   );
 };

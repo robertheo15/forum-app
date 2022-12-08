@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { userDTO } from '../../utils/dto';
 
 const LeaderboardItem = ({ user, score }) => {
   const { name, avatar } = user;
@@ -12,5 +13,10 @@ const LeaderboardItem = ({ user, score }) => {
       <p className="leaderboard-item__score">{score}</p>
     </div>
   );
+};
+
+LeaderboardItem.propTypes = {
+  user: PropTypes.shape(userDTO).isRequired,
+  score: PropTypes.number.isRequired,
 };
 export default LeaderboardItem;

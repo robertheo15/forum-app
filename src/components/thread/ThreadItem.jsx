@@ -1,15 +1,16 @@
 import React from 'react';
-// import parser from 'html-react-parser';
+import PropTypes from 'prop-types';
+import parse from 'html-react-parser';
 import ThreadHeader from './ThreadItemHeader';
 import ThreadItemFooter from './ThreadItemFooter';
+import { userDTO } from '../../utils/dto';
 
 const ThreadItem = ({
-  // eslint-disable-next-line react/prop-types, no-unused-vars
-  title, id, body, category, user, createdAt, totalComments, upVotesBy, downVotesBy,
+  id, body, title, category, user, createdAt, totalComments, upVotesBy, downVotesBy,
 }) => (
   <div className="thread-item">
     <ThreadHeader id={id} title={title} category={category} />
-    <div className="thread-item__body">{body}</div>
+    <div className="thread-item__body">{parse(body)}</div>
     <ThreadItemFooter
       createdAt={createdAt}
       user={user}
@@ -20,4 +21,15 @@ const ThreadItem = ({
   </div>
 );
 
+ThreadItem.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  category: PropTypes.string,
+  createdAt: PropTypes.string,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string),
+  downVotesBy: PropTypes.arrayOf(PropTypes.string),
+  totalComments: PropTypes.number,
+  user: PropTypes.shape(userDTO),
+};
 export default ThreadItem;

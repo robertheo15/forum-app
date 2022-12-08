@@ -37,8 +37,8 @@ function toggleLikeThreadActionCreator({ threadId, userId }) {
 function asyncAddThread({ title, category, body }) {
   return async (dispatch) => {
     try {
-      const thread = await api.createThread({ title, category, body });
-      dispatch(addThreadActionCreator(thread));
+      const { thread } = await api.createThread({ title, category, body });
+      dispatch(addThreadActionCreator(thread.thread));
     } catch (error) {
       alert(error.message);
     }

@@ -1,9 +1,11 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import CommentInput from '../comment/CommentInput';
 import CommentList from '../comment/CommentList';
+import { detailDTO, userDTO, commentDTO } from '../../utils/dto';
 
-const ThreadDetailComment = ({ authUser, detail }) => {
+const ThreadDetailComment = ({ onCreateComment, authUser, detail }) => {
   const { comments } = detail;
   if (authUser === null || authUser === undefined) {
     return (
@@ -29,10 +31,7 @@ const ThreadDetailComment = ({ authUser, detail }) => {
     <div className="thread-comment">
       <div className="thread-comment__input">
         <h3>Beri komentar</h3>
-        <form className="comment-input">
-          <div className="comment-input__field" />
-          <button type="submit">Kirim</button>
-        </form>
+        <CommentInput onCreateComment={onCreateComment} />
       </div>
       <div className="thread-comment__list">
         <h3>{`Komentar (${comments.length})`}</h3>
@@ -41,4 +40,12 @@ const ThreadDetailComment = ({ authUser, detail }) => {
     </div>
   );
 };
+
+ThreadDetailComment.propTypes = {
+  detail: PropTypes.shape(detailDTO),
+  comments: PropTypes.arrayOf(PropTypes.shape(commentDTO)),
+  onCreateComment: PropTypes.func.isRequired,
+  authUser: PropTypes.shape(userDTO),
+};
+
 export default ThreadDetailComment;

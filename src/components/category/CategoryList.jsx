@@ -1,19 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CategoryItem from './Categoryitem';
+import { threadDTO } from '../../utils/dto';
 
-// eslint-disable-next-line react/prop-types
 const CategoryList = ({ threadList }) => (
   <header>
     <p>Kategori popular</p>
     <div className="categories-list">
       {
-      // eslint-disable-next-line react/prop-types
-      threadList.map((thread) => (
-        <CategoryItem key={thread.id} {...thread} />
+      threadList.map((thread, key) => (
+        <CategoryItem key={`${key}`} {...thread} />
       ))
     }
     </div>
   </header>
 );
+
+CategoryList.propTypes = {
+  threadList: PropTypes.arrayOf(PropTypes.shape(threadDTO)),
+};
 
 export default CategoryList;

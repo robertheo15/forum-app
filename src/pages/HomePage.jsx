@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 import { IoMdAddCircle } from 'react-icons/io';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import CategoryList from '../components/category/CategoryList';
 import ThreadList from '../components/thread/ThreadList';
-import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 
-// eslint-disable-next-line react/prop-types
+import { asyncPopulateUsersAndThreads } from '../states/shared/action';
+import { userDTO } from '../utils/dto';
+
 const HomePage = ({ authUser }) => {
   const {
     threads = [],
@@ -30,7 +31,6 @@ const HomePage = ({ authUser }) => {
   const onAddPage = () => {
     navigate('/new');
   };
-
   return (
     <section className="home-page">
       <CategoryList threadList={threadList} />
@@ -49,7 +49,8 @@ const HomePage = ({ authUser }) => {
     </section>
   );
 };
-// HomePage.propTypes = {
-//   user: PropTypes.object,
-// };
+
+HomePage.propTypes = {
+  authUser: PropTypes.shape(userDTO),
+};
 export default HomePage;

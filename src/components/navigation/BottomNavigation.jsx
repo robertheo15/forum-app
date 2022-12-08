@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-
 import { BiChat } from 'react-icons/bi';
 import { MdOutlineLeaderboard } from 'react-icons/md';
 import { GrLogout, GrLogin } from 'react-icons/gr';
+import { userDTO } from '../../utils/dto';
 
-// eslint-disable-next-line react/prop-types
 const BottomNavigation = ({ user, signOut }) => {
   const navigate = useNavigate();
 
@@ -66,4 +66,8 @@ const BottomNavigation = ({ user, signOut }) => {
   );
 };
 
+BottomNavigation.propTypes = {
+  user: PropTypes.shape(userDTO),
+  signOut: PropTypes.func,
+};
 export default BottomNavigation;

@@ -6,7 +6,6 @@ const ActionType = {
 };
 
 function setAuthUserActionCreator(authUser) {
-  localStorage.setItem('user', JSON.stringify(authUser));
   return {
     type: ActionType.SET_AUTH_USER,
     payload: {
@@ -16,7 +15,6 @@ function setAuthUserActionCreator(authUser) {
 }
 
 function unsetAuthUserActionCreator() {
-  localStorage.setItem('user', '');
   return {
     type: ActionType.UNSET_AUTH_USER,
     payload: {
@@ -27,11 +25,17 @@ function unsetAuthUserActionCreator() {
 function asyncSetAuthUser({ email, password }) {
   return async (dispatch) => {
     try {
-      const { data } = await api.login({ email, password });
-      api.setAccessToken(data.token);
-      const authUser = await api.getUserLogged(data.token);
-
-      dispatch(setAuthUserActionCreator(authUser.data.data));
+      api.login({ email, password })
+        .then((result) => {
+          api.setAccessToken(result.data.token);
+        })
+        .catch((err) => {
+          alert(err);
+        })
+        .finally(async () => {
+          const { data } = await api.getUserLogged(localStorage.getItem('accessToken'));
+          dispatch(setAuthUserActionCreator(data.data.user));
+        });
     } catch (error) {
       alert(error.message);
     }

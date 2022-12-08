@@ -8,7 +8,7 @@ function threadDetailReducer(threadDetail = null, action = {}) {
       return threadDetail.comments.map((comment) => {
         if (comment.id === action.payload.commentId) {
           return {
-            ...comment,
+            comment,
             comments: threadDetail.comments.includes(action.payload.comment)
               ? threadDetail.comments.filter((id) => id !== action.payload.comment)
               : threadDetail.comments.concat([action.payload.comment]),

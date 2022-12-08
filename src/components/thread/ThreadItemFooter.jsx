@@ -1,8 +1,9 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes, { string } from 'prop-types';
 import { BiCommentDetail } from 'react-icons/bi';
 import ActionButton from '../action/ActionButton';
 import postedAt from '../../utils';
+import { userDTO } from '../../utils/dto';
 
 const ThreadItemFooter = ({
   user, createdAt, totalComments, upVotesBy, downVotesBy,
@@ -17,11 +18,18 @@ const ThreadItemFooter = ({
       {totalComments}
     </p>
     <p>{postedAt(createdAt)}</p>
-    <p className="thread-item__owner">
-      Dibuat oleh&nbsp;
-      <strong>{user.name}</strong>
-    </p>
+    <div className="comment-item__owner-info">
+      <img src={`${user.avatar}`} alt="avatar" />
+      <p>{user.name}</p>
+    </div>
   </footer>
 );
 
+ThreadItemFooter.propTypes = {
+  user: PropTypes.shape(userDTO).isRequired,
+  createdAt: PropTypes.string.isRequired,
+  totalComments: PropTypes.number.isRequired,
+  upVotesBy: PropTypes.arrayOf(string).isRequired,
+  downVotesBy: PropTypes.arrayOf(string).isRequired,
+};
 export default ThreadItemFooter;
