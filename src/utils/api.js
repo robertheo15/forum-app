@@ -5,11 +5,6 @@ const api = (() => {
   const getAccessToken = localStorage.getItem('accessToken');
 
   const setAccessToken = (accessToken) => localStorage.setItem('accessToken', accessToken);
-  const setAuthorization = {
-    headers: {
-      Authorization: `Bearer ${getAccessToken}`,
-    },
-  };
 
   const getUsers = async () => {
     try {
@@ -47,11 +42,14 @@ const api = (() => {
 
   const getUserLogged = async (token) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/users/me`, {
+      const { data, status } = await axios.get(`${BASE_URL}/users/me`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,
         },
       });
+      if (status >= 400) {
+        localStorage.setItem('accessToken', '');
+      }
       return { error: false, data };
     } catch (error) {
       return { error: true, data: null };
@@ -60,10 +58,14 @@ const api = (() => {
 
   const createThread = async ({ title, category, body }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads`, {
+      const { data } = await axios.post(`${BASE_URL}/threads`, {
         title, category, body,
-      }, setAuthorization);
-      return { error: false, data: response.data };
+      }, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+      return { error: false, thread: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
@@ -89,7 +91,11 @@ const api = (() => {
 
   const upVoteThread = async ({ threadId }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/up-vote`, setAuthorization);
+      const response = await axios.post(`${BASE_URL}/threads/${threadId}/up-vote`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, data: response.data };
     } catch (error) {
       return { error: true, data: null };
@@ -98,7 +104,11 @@ const api = (() => {
 
   const downVoteThread = async ({ threadId }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/down-vote`, setAuthorization);
+      const response = await axios.post(`${BASE_URL}/threads/${threadId}/down-vote`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, data: response.data };
     } catch (error) {
       return { error: true, data: null };
@@ -107,27 +117,41 @@ const api = (() => {
 
   const neutralizeVoteThread = async ({ threadId }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/neutral-vote`, setAuthorization);
+      const response = await axios.post(`${BASE_URL}/threads/${threadId}/neutral-vote`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, data: response.data };
     } catch (error) {
       return { error: true, data: null };
     }
   };
 
-  const createComment = async ({ threadId, content }) => {
+  const createComment = async (threadId, content) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/comments`, {
         content,
-      }, setAuthorization);
-      return { error: false, data: response.data };
+      }, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+      return { error: false, comment: data.data };
     } catch (error) {
+      const { response } = error;
+      alert(response.data.message);
       return { error: true, data: null };
     }
   };
 
   const upVoteComment = async ({ threadId, commentId }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, setAuthorization);
+      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, data: response.data };
     } catch (error) {
       return { error: true, data: null };
@@ -136,7 +160,11 @@ const api = (() => {
 
   const downVoteComment = async ({ threadId, commentId }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, setAuthorization);
+      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, data: response.data };
     } catch (error) {
       return { error: true, data: null };
@@ -145,7 +173,11 @@ const api = (() => {
 
   const neutralizeVoteComment = async ({ threadId, commentId }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/neutral-vote`, setAuthorization);
+      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/neutral-vote`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, data: response.data };
     } catch (error) {
       return { error: true, data: null };
@@ -154,7 +186,11 @@ const api = (() => {
 
   const getLeaderboard = async () => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/leaderboards`, setAuthorization);
+      const { data } = await axios.get(`${BASE_URL}/leaderboards`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       return { error: false, leaderboards: data.data };
     } catch (error) {
       return { error: true, data: null };
