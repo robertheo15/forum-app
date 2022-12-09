@@ -137,7 +137,7 @@ const api = (() => {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, comment: data.data };
+      return { error: false, comment: data.data.comment };
     } catch (error) {
       const { response } = error;
       alert(response.data.message);

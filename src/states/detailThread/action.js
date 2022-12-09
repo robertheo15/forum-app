@@ -7,11 +7,11 @@ const ActionType = {
   TOGGLE_LIKE_THREAD_DETAIL: 'TOGGLE_LIKE_THREAD_DETAIL',
 };
 
-function addCommentActionCreator(threadDetail) {
+function addCommentActionCreator(comment) {
   return {
     type: ActionType.ADD_COMMMENT,
     payload: {
-      threadDetail,
+      comment,
     },
   };
 }
@@ -32,17 +32,16 @@ function clearThreadDetailActionCreator() {
 }
 
 function asyncAddComment({ id, content }) {
-  return async (dispatch, getState) => {
-    const { threadDetail } = getState();
-    dispatch(addCommentActionCreator(threadDetail));
-
+  return async (dispatch) => {
     try {
-      await api.createComment(id, content);
+      const { comment } = await api.createComment(id, content);
+      dispatch(addCommentActionCreator(comment));
     } catch (error) {
       alert(error.message);
     }
   };
 }
+
 function toggleLikeThreadDetailActionCreator(userId) {
   return {
     type: ActionType.TOGGLE_LIKE_THREAD_DETAIL,

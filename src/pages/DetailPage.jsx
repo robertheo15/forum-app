@@ -22,7 +22,6 @@ const DetailPage = () => {
 
   const onCreateComment = ({ content }) => {
     dispatch(asyncAddComment({ id, content }));
-    dispatch(asyncReceiveThreadDetail(id));
   };
 
   if (!threadDetail) {
