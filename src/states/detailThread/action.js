@@ -1,3 +1,4 @@
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
 
 const ActionType = {
@@ -33,12 +34,15 @@ function clearThreadDetailActionCreator() {
 
 function asyncAddComment({ id, content }) {
   return async (dispatch) => {
+    dispatch(showLoading());
+
     try {
       const { comment } = await api.createComment(id, content);
       dispatch(addCommentActionCreator(comment));
     } catch (error) {
       alert(error.message);
     }
+    dispatch(hideLoading());
   };
 }
 
@@ -53,6 +57,8 @@ function toggleLikeThreadDetailActionCreator(userId) {
 
 function asyncReceiveThreadDetail(threadId) {
   return async (dispatch) => {
+    dispatch(showLoading());
+
     dispatch(clearThreadDetailActionCreator());
     try {
       const { threadDetail } = await api.getThreadById(threadId);
@@ -60,6 +66,8 @@ function asyncReceiveThreadDetail(threadId) {
     } catch (error) {
       alert(error.message);
     }
+
+    dispatch(hideLoading());
   };
 }
 
