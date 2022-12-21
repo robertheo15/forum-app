@@ -50,7 +50,6 @@ describe('usersReducer function', () => {
     const nextState = usersReducer(initialState, action);
  
     // assert
-    console.log(initialState)
     expect(nextState).toEqual(action.payload.users);
  });
 });
