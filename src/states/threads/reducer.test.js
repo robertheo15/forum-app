@@ -65,7 +65,6 @@ describe('threadReducers function', () => {
      const nextState = threadsReducer(initialState, action);
   
      // assert
-     console.log(initialState)
      expect(nextState).toEqual(action.payload.threads);
   });
 
