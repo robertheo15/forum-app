@@ -23,7 +23,7 @@ describe('usersReducer function', () => {
     expect(nextState).toEqual(initialState);
  });
 
- it('should return the threads when given by threads/receive action', () => {
+ it('should return the users when given by users/receive action', () => {
    // arrange
    const initialState = [];
    const action = {
