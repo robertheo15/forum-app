@@ -25,11 +25,11 @@ describe('isPreloadReducer function', () => {
 
  it('should return the isPreaload when given by isPreload/set action', () => {
    // arrange
-   const initialState = [];
+   const initialState = true;
    const action = {
      type: 'isPreload/set',
      payload: {
-      isPreload: true
+      isPreload: false
      },
    };
  
