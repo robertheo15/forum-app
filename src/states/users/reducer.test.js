@@ -31,16 +31,16 @@ describe('usersReducer function', () => {
      payload: {
       users: [
         {
-        id: "user-6oWew2w2Wx5xLUTU",
-        name: "Dicoding",
-        email: "admin@dicoding.com",
-        avatar: "https://ui-avatars.com/api/?name=Dicoding&background=random"
+          id: "user-6oWew2w2Wx5xLUTU",
+          name: "Dicoding",
+          email: "admin@dicoding.com",
+          avatar: "https://ui-avatars.com/api/?name=Dicoding&background=random"
         },
         {
-        id: "user-5PqX6Ldhnk_ifroq",
-        name: "Dimas Saputra",
-        email: "dimas@dicoding.com",
-        avatar: "https://ui-avatars.com/api/?name=Dimas Saputra&background=random"
+          id: "user-5PqX6Ldhnk_ifroq",
+          name: "Dimas Saputra",
+          email: "dimas@dicoding.com",
+          avatar: "https://ui-avatars.com/api/?name=Dimas Saputra&background=random"
         },
        ],
      },
