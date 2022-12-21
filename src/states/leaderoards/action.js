@@ -1,5 +1,5 @@
 const ActionType = {
-  RECEIVE_LEADERBOARDS: 'RECEIVE_LEADERBOARDS',
+  RECEIVE_LEADERBOARDS: 'leaderboards/receive',
 };
 
 function receiveLeaderboardsActionCreator(leaderboards) {

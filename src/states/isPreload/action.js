@@ -3,7 +3,7 @@ import api from '../../utils/api';
 import { setAuthUserActionCreator } from '../auth/action';
 
 const ActionType = {
-  SET_IS_PRELOAD: 'SET_IS_PRELOAD',
+  SET_IS_PRELOAD: 'isPreload/set',
 };
 
 function setIsPreloadActionCreator(isPreload) {

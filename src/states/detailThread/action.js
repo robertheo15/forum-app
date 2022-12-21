@@ -2,10 +2,10 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
 
 const ActionType = {
-  RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
-  ADD_COMMMENT: 'ADD_COMMMENT',
-  CLEAR_THREAD_DETAIL: 'CLEAR_THREAD_DETAIL',
-  TOGGLE_LIKE_THREAD_DETAIL: 'TOGGLE_LIKE_THREAD_DETAIL',
+  RECEIVE_THREAD_DETAIL: 'detailThread/receive',
+  ADD_COMMMENT: 'detailThread/addComment',
+  CLEAR_THREAD_DETAIL: 'detailThread/clearThread',
+  TOGGLE_LIKE_THREAD_DETAIL: 'detailThread/like',
 };
 
 function addCommentActionCreator(comment) {
