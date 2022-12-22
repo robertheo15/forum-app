@@ -6,7 +6,7 @@ const ThreadHeader = ({
   id, title, category,
 }) => (
   <header className="thread-item__header">
-    <span className="thread-item__category">{category}</span>
+    <span className="thread-item__category">{`#${category}`}</span>
     <h4 className="thread-item__title"><Link to={`/threads/${id}`}>{title}</Link></h4>
   </header>
 );
