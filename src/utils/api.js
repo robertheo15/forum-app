@@ -145,27 +145,27 @@ const api = (() => {
     }
   };
 
-  const upVoteComment = async ({ threadId, commentId }) => {
+  const upVoteComment = async (threadId, commentId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, {}, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
   };
 
-  const downVoteComment = async ({ threadId, commentId }) => {
+  const downVoteComment = async (threadId, commentId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, {}, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
