@@ -5,7 +5,12 @@ import ThreadDetailHeader from '../components/thread/ThreadDetailHeader';
 import ThreadDetailContent from '../components/thread/ThreadDetailContent';
 import ThreadDetailFooter from '../components/thread/ThreadDetailFooter';
 import ThreadDetailComment from '../components/thread/ThreadDetailComment';
-import { asyncReceiveThreadDetail, asyncAddComment } from '../states/detailThread/action';
+import {
+  asyncAddComment,
+  asyncReceiveThreadDetail,
+  asyncToogleLikeThreadDetail,
+  asyncToggleDislikeThreadDetail,
+} from '../states/detailThread/action';
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -24,6 +29,14 @@ const DetailPage = () => {
     dispatch(asyncAddComment({ id, content }));
   };
 
+  const onLike = () => {
+    dispatch(asyncToogleLikeThreadDetail(id));
+  };
+
+  const onDislike = () => {
+    dispatch(asyncToggleDislikeThreadDetail(id));
+  };
+
   if (!threadDetail) {
     return null;
   }
@@ -31,7 +44,11 @@ const DetailPage = () => {
     <section className="detail-page">
       <ThreadDetailHeader detail={threadDetail} />
       <ThreadDetailContent detail={threadDetail} />
-      <ThreadDetailFooter detail={threadDetail} />
+      <ThreadDetailFooter
+        like={onLike}
+        dislike={onDislike}
+        detail={threadDetail}
+      />
       <ThreadDetailComment
         onCreateComment={onCreateComment}
         authUser={authUser}
