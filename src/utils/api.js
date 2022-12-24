@@ -89,27 +89,27 @@ const api = (() => {
     }
   };
 
-  const upVoteThread = async ({ threadId }) => {
+  const upVoteThread = async (threadId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/up-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/up-vote`, {}, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
-      return { error: true, data: null };
+      return { error: true, vote: null };
     }
   };
 
-  const downVoteThread = async ({ threadId }) => {
+  const downVoteThread = async (threadId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/down-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/down-vote`, {}, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
