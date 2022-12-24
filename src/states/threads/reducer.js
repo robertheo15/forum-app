@@ -34,7 +34,6 @@ function threadsReducer(threads = [], action = {}) {
               : thread.upVotesBy,
           };
         }
-        console.log(thread);
         return thread;
       });
     case ActionType.CLEAR_LIKE_THREAD:
