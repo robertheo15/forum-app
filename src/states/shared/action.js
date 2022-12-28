@@ -7,10 +7,10 @@ function asyncPopulateUsersAndThreads() {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const users = await api.getUsers();
-      const threads = await api.getThreads();
-      dispatch(receiveUsersActionCreator(users));
-      dispatch(receiveThreadsActionCreator(threads));
+      const { users } = await api.getUsers();
+      const { threads } = await api.getThreads();
+      dispatch(receiveUsersActionCreator(users.users));
+      dispatch(receiveThreadsActionCreator(threads.threads));
     } catch (error) {
       alert(error.message);
     }

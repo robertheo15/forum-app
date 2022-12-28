@@ -9,8 +9,7 @@ const api = (() => {
   const getUsers = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/users`);
-      const { data: { users } } = data;
-      return users;
+      return { error: false, users: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
@@ -75,8 +74,7 @@ const api = (() => {
   const getThreads = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/threads`);
-      const { data: { threads } } = data;
-      return threads;
+      return { error: false, threads: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
