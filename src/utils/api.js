@@ -23,7 +23,7 @@ const api = (() => {
       });
       return { error: false, data: data.data };
     } catch (error) {
-      return { error: true, data: null };
+      return { error: true, data: error.response.data.message };
     }
   };
 

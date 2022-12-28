@@ -27,10 +27,12 @@ function asyncSetAuthUser({ email, password }) {
     try {
       api.login({ email, password })
         .then((result) => {
-          api.setAccessToken(result.data.token);
-        })
-        .catch((err) => {
-          alert(err);
+          if (result.error === true) {
+            alert(result.data);
+            api.setAccessToken(null);
+          } else {
+            api.setAccessToken(result.data.token);
+          }
         })
         .finally(async () => {
           const { data } = await api.getUserLogged(localStorage.getItem('accessToken'));

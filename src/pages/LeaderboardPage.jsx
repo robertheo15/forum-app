@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import LeaderboardList from '../components/leaderboard/LeaderboardList';
-import { asyncPopulateLeaderboards } from '../states/shared/action';
+import { asyncReceiveLeaderboard } from '../states/leaderoards/action';
 
 const LeaderboardPage = () => {
   const {
@@ -11,7 +11,7 @@ const LeaderboardPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(asyncPopulateLeaderboards());
+    dispatch(asyncReceiveLeaderboard());
   }, [dispatch]);
 
   const leaderboardList = leaderboards.map((leaderboard) => ({
