@@ -6,30 +6,39 @@ import postedAt from '../../utils';
 import { userDTO } from '../../utils/dto';
 
 const ThreadItemFooter = ({
-  user, createdAt, totalComments, upVotesBy, downVotesBy,
-}) => (
-  <footer className="thread-item__footer">
-    <ActionButton
-      upVotesCount={(upVotesBy === undefined) ? 0 : upVotesBy.length}
-      downVotesCount={(downVotesBy === undefined) ? 0 : downVotesBy.length}
-    />
-    <p className="thread-item__total-comments">
-      <BiCommentDetail />
-      {totalComments}
-    </p>
-    <p>{postedAt(createdAt)}</p>
-    <div className="comment-item__owner-info">
-      <img src={`${user.avatar}`} alt="avatar" />
-      <p>{user.name}</p>
-    </div>
-  </footer>
-);
+  user, createdAt, totalComments, upVotesBy, downVotesBy, like, dislike, id,
+}) => {
+  const { name, avatar } = user;
+  return (
+    <footer className="thread-item__footer">
+      <ActionButton
+        id={id}
+        upVotesCount={upVotesBy.length}
+        downVotesCount={downVotesBy.length}
+        like={like}
+        dislike={dislike}
+      />
+      <p className="thread-item__total-comments">
+        <BiCommentDetail />
+        {totalComments}
+      </p>
+      <p>{postedAt(createdAt)}</p>
+      <div className="comment-item__owner-info">
+        <img src={avatar} alt="avatar" />
+        <p>{name}</p>
+      </div>
+    </footer>
+  );
+};
 
 ThreadItemFooter.propTypes = {
-  user: PropTypes.shape(userDTO).isRequired,
-  createdAt: PropTypes.string.isRequired,
-  totalComments: PropTypes.number.isRequired,
-  upVotesBy: PropTypes.arrayOf(string).isRequired,
-  downVotesBy: PropTypes.arrayOf(string).isRequired,
+  id: PropTypes.string,
+  user: PropTypes.shape(userDTO),
+  createdAt: PropTypes.string,
+  totalComments: PropTypes.number,
+  upVotesBy: PropTypes.arrayOf(string),
+  downVotesBy: PropTypes.arrayOf(string),
+  like: PropTypes.func,
+  dislike: PropTypes.func,
 };
 export default ThreadItemFooter;

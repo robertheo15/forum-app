@@ -4,14 +4,19 @@ import postedAt from '../../utils';
 import ActionButton from '../action/ActionButton';
 import { detailDTO } from '../../utils/dto';
 
-const ThreadDetailFooter = ({ detail }) => {
+const ThreadDetailFooter = ({ detail, like, dislike }) => {
   const {
     owner, createdAt, upVotesBy, downVotesBy,
   } = detail;
 
   return (
     <footer className="thread-footer">
-      <ActionButton upVotesCount={upVotesBy.length} downVotesCount={downVotesBy.length} />
+      <ActionButton
+        upVotesCount={upVotesBy.length}
+        downVotesCount={downVotesBy.length}
+        like={like}
+        dislike={dislike}
+      />
       <div className="owner-info">
         <span>
           Dibuat oleh
@@ -25,6 +30,8 @@ const ThreadDetailFooter = ({ detail }) => {
 };
 ThreadDetailFooter.propTypes = {
   detail: PropTypes.shape(detailDTO),
+  like: PropTypes.func,
+  dislike: PropTypes.func,
 };
 
 export default ThreadDetailFooter;

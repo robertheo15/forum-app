@@ -11,7 +11,7 @@ const CommentInput = ({ onCreateComment }) => {
 
   return (
     <form className="comment-input">
-      <div className="comment-input__field" contentEditable onInput={onChange} />
+      <div className="comment-input__field" contentEditable onInput={onChange} data-testid="comment-input__field" />
       <button type="button" onClick={() => onCreateComment({ content })}>Kirim</button>
     </form>
   );

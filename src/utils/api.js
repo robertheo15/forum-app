@@ -9,7 +9,8 @@ const api = (() => {
   const getUsers = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/users`);
-      return { error: false, users: data.data };
+      const { data: { users } } = data;
+      return users;
     } catch (error) {
       return { error: true, data: null };
     }
@@ -23,7 +24,7 @@ const api = (() => {
       });
       return { error: false, data: data.data };
     } catch (error) {
-      return { error: true, data: null };
+      return { error: true, data: error.response.data.message };
     }
   };
 
@@ -74,7 +75,8 @@ const api = (() => {
   const getThreads = async () => {
     try {
       const { data } = await axios.get(`${BASE_URL}/threads`);
-      return { error: false, threads: data.data };
+      const { data: { threads } } = data;
+      return threads;
     } catch (error) {
       return { error: true, data: null };
     }
@@ -89,27 +91,27 @@ const api = (() => {
     }
   };
 
-  const upVoteThread = async ({ threadId }) => {
+  const upVoteThread = async (threadId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/up-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/up-vote`, {}, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
-      return { error: true, data: null };
+      return { error: true, vote: null };
     }
   };
 
-  const downVoteThread = async ({ threadId }) => {
+  const downVoteThread = async (threadId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/down-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/down-vote`, {}, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
@@ -145,27 +147,27 @@ const api = (() => {
     }
   };
 
-  const upVoteComment = async ({ threadId, commentId }) => {
+  const upVoteComment = async (threadId, commentId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, {}, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
   };
 
-  const downVoteComment = async ({ threadId, commentId }) => {
+  const downVoteComment = async (threadId, commentId) => {
     try {
-      const response = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, {
+      const { data } = await axios.post(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, {}, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, data: response.data };
+      return { error: false, vote: data.data };
     } catch (error) {
       return { error: true, data: null };
     }
@@ -191,7 +193,9 @@ const api = (() => {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      return { error: false, leaderboards: data.data };
+      const { data: { leaderboards } } = data;
+
+      return leaderboards;
     } catch (error) {
       return { error: true, data: null };
     }

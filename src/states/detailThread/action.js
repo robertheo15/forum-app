@@ -6,6 +6,11 @@ const ActionType = {
   ADD_COMMMENT: 'detailThread/addComment',
   CLEAR_THREAD_DETAIL: 'detailThread/clearThread',
   TOGGLE_LIKE_THREAD_DETAIL: 'detailThread/like',
+  TOGGLE_DISLIKE_THREAD_DETAIL: 'detailThread/dislike',
+  CLEAR_LIKE_THREAD_DETAIL: 'detailThread/clearLike',
+  TOGGLE_LIKE_COMMENT: 'detailThread/likeComment',
+  TOGGLE_DISLIKE_COMMENT: 'detailThread/dislikeComment',
+  CLEAR_LIKE_COMMENT: 'detailThread/clearComment',
 };
 
 function addCommentActionCreator(comment) {
@@ -32,6 +37,62 @@ function clearThreadDetailActionCreator() {
   };
 }
 
+function toggleLikeThreadDetailActionCreator(userId) {
+  return {
+    type: ActionType.TOGGLE_LIKE_THREAD_DETAIL,
+    payload: {
+      userId,
+    },
+  };
+}
+
+function toggleDislikeThreadDetailActionCreator(userId) {
+  return {
+    type: ActionType.TOGGLE_DISLIKE_THREAD_DETAIL,
+    payload: {
+      userId,
+    },
+  };
+}
+function clearLikeThreadDetailActionCreator(userId) {
+  return {
+    type: ActionType.CLEAR_LIKE_THREAD_DETAIL,
+    payload: {
+      userId,
+    },
+  };
+}
+
+function toggleLikeCommentActionCreator(userId, commentId) {
+  return {
+    type: ActionType.TOGGLE_LIKE_COMMENT,
+    payload: {
+      userId,
+      commentId,
+    },
+  };
+}
+
+function toggleDislikeCommentActionCreator(userId, commentId) {
+  return {
+    type: ActionType.TOGGLE_DISLIKE_COMMENT,
+    payload: {
+      userId,
+      commentId,
+    },
+  };
+}
+
+function clearLikeCommentActionCreator(userId, commentId) {
+  return {
+    type: ActionType.CLEAR_LIKE_COMMENT,
+    payload: {
+      userId,
+      commentId,
+    },
+  };
+}
+
 function asyncAddComment({ id, content }) {
   return async (dispatch) => {
     dispatch(showLoading());
@@ -43,15 +104,6 @@ function asyncAddComment({ id, content }) {
       alert(error.message);
     }
     dispatch(hideLoading());
-  };
-}
-
-function toggleLikeThreadDetailActionCreator(userId) {
-  return {
-    type: ActionType.TOGGLE_LIKE_THREAD_DETAIL,
-    payload: {
-      userId,
-    },
   };
 }
 
@@ -73,14 +125,98 @@ function asyncReceiveThreadDetail(threadId) {
 
 function asyncToogleLikeThreadDetail() {
   return async (dispatch, getState) => {
-    const { authUser, talkDetail } = getState();
+    const { authUser, threadDetail } = getState();
     dispatch(toggleLikeThreadDetailActionCreator(authUser.id));
 
     try {
-      await api.toggleLikeTalk(talkDetail.id);
+      await api.upVoteThread(threadDetail.id);
     } catch (error) {
       alert(error.message);
     }
+  };
+}
+
+function asyncToggleDislikeThreadDetail() {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser, threadDetail } = getState();
+    dispatch(toggleDislikeThreadDetailActionCreator(authUser.id));
+
+    try {
+      await api.downVoteThread(threadDetail.id);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    dispatch(hideLoading());
+  };
+}
+
+function asyncClearLikeThreadDetail() {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser, threadDetail } = getState();
+    dispatch(clearLikeThreadDetailActionCreator(authUser.id));
+
+    try {
+      await api.neutralizeVoteThread(threadDetail.id);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    dispatch(hideLoading());
+  };
+}
+
+function asyncToogleLikeComment(commentId) {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser, threadDetail } = getState();
+    dispatch(toggleLikeCommentActionCreator(authUser.id, commentId));
+    try {
+      await api.upVoteComment(threadDetail.id, commentId);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    dispatch(hideLoading());
+  };
+}
+
+function asyncToogleDislikeComment(commentId) {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser, threadDetail } = getState();
+    dispatch(toggleDislikeCommentActionCreator(authUser.id, commentId));
+
+    try {
+      await api.downVoteComment(threadDetail.id, commentId);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    dispatch(hideLoading());
+  };
+}
+
+function asyncClearLikeComment(commentId) {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { authUser, threadDetail } = getState();
+    dispatch(clearLikeCommentActionCreator(authUser.id, commentId));
+
+    try {
+      await api.neutralizeVoteComment(threadDetail.id, commentId);
+    } catch (error) {
+      alert(error.message);
+    }
+
+    dispatch(hideLoading());
   };
 }
 
@@ -88,9 +224,19 @@ export {
   ActionType,
   receiveThreadDetailActionCreator,
   addCommentActionCreator,
-  asyncAddComment,
   clearThreadDetailActionCreator,
   toggleLikeThreadDetailActionCreator,
+  toggleDislikeThreadDetailActionCreator,
+  clearLikeThreadDetailActionCreator,
+  toggleLikeCommentActionCreator,
+  toggleDislikeCommentActionCreator,
+  clearLikeCommentActionCreator,
+  asyncAddComment,
   asyncReceiveThreadDetail,
   asyncToogleLikeThreadDetail,
+  asyncToggleDislikeThreadDetail,
+  asyncClearLikeThreadDetail,
+  asyncToogleLikeComment,
+  asyncToogleDislikeComment,
+  asyncClearLikeComment,
 };

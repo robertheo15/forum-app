@@ -9,7 +9,7 @@ const LoginInput = ({ login }) => {
     <form className="login-input">
       <input type="email" value={email} onChange={onEmailChange} placeholder="Email" />
       <input type="password" value={password} onChange={onPasswordChange} placeholder="Password" />
-      <button type="button" onClick={() => login({ email, password })}>Login</button>
+      <button type="button" onClick={() => login({ email, password })} data-test-id="login">Login</button>
     </form>
   );
 };

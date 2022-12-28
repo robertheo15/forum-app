@@ -6,7 +6,7 @@ import ActionButton from '../action/ActionButton';
 import { userDTO } from '../../utils/dto';
 
 const CommentItem = ({
-  content, owner, createdAt, downVotesBy, upVotesBy,
+  id, content, owner, createdAt, downVotesBy, upVotesBy, like, dislike,
 }) => (
   <div className="comment-item">
     <header className="comment-item__header">
@@ -18,16 +18,25 @@ const CommentItem = ({
     </header>
     <p>{parse(content)}</p>
     <footer>
-      <ActionButton upVotesCount={upVotesBy.length} downVotesCount={downVotesBy.length} />
+      <ActionButton
+        id={id}
+        upVotesCount={upVotesBy.length}
+        downVotesCount={downVotesBy.length}
+        like={like}
+        dislike={dislike}
+      />
     </footer>
   </div>
 );
 
 CommentItem.propTypes = {
+  id: PropTypes.string,
   content: PropTypes.string,
   createdAt: PropTypes.string,
   owner: PropTypes.shape(userDTO),
   upVotesBy: PropTypes.arrayOf(PropTypes.string),
   downVotesBy: PropTypes.arrayOf(PropTypes.string),
+  like: PropTypes.func,
+  dislike: PropTypes.func,
 };
 export default CommentItem;
