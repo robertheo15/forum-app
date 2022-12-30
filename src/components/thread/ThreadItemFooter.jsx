@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes, { string } from 'prop-types';
 import { BiCommentDetail } from 'react-icons/bi';
 import ActionButton from '../action/ActionButton';
@@ -8,15 +9,25 @@ import { userDTO } from '../../utils/dto';
 const ThreadItemFooter = ({
   user, createdAt, totalComments, upVotesBy, downVotesBy, like, dislike, id,
 }) => {
+  const {
+    authUser,
+  } = useSelector((states) => states);
   const { name, avatar } = user;
   return (
     <footer className="thread-item__footer">
       <ActionButton
         id={id}
-        upVotesCount={upVotesBy.length}
-        downVotesCount={downVotesBy.length}
-        like={like}
-        dislike={dislike}
+        authUser={authUser}
+        type="like"
+        count={upVotesBy.length}
+        likeOrDislike={like}
+      />
+      <ActionButton
+        id={id}
+        authUser={authUser}
+        type="dislike"
+        count={downVotesBy.length}
+        likeOrDislike={dislike}
       />
       <p className="thread-item__total-comments">
         <BiCommentDetail />
