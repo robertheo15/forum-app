@@ -20,8 +20,8 @@ function asyncPreloadProcess() {
     dispatch(showLoading());
     try {
       // preload process
-      const { data } = await api.getUserLogged(localStorage.getItem('accessToken'));
-      dispatch(setAuthUserActionCreator(data.data.user));
+      const user = await api.getUserLogged(localStorage.getItem('accessToken'));
+      dispatch(setAuthUserActionCreator(user));
     } catch (error) {
       // fallback process
       dispatch(setAuthUserActionCreator(null));

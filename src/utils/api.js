@@ -30,14 +30,15 @@ const api = (() => {
 
   const register = async ({ name, email, password }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/register`, {
+      const { data } = await axios.post(`${BASE_URL}/register`, {
         name,
         email,
         password,
       });
-      return { error: false, data: response.data };
+      const { data: { user } } = data;
+      return { error: false, user };
     } catch (error) {
-      return { error: true, data: null };
+      return { error: true, data: error.response.data.message };
     }
   };
 
@@ -49,11 +50,13 @@ const api = (() => {
         },
       });
       if (status >= 400) {
-        localStorage.setItem('accessToken', '');
+        localStorage.setItem('accessToken', null);
+        return null;
       }
-      return { error: false, data };
+      const { data: { user } } = data;
+      return user;
     } catch (error) {
-      return { error: true, data: null };
+      return null;
     }
   };
 
