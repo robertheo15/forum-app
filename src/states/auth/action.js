@@ -35,8 +35,8 @@ function asyncSetAuthUser({ email, password }) {
           }
         })
         .finally(async () => {
-          const { data } = await api.getUserLogged(localStorage.getItem('accessToken'));
-          dispatch(setAuthUserActionCreator(data.data.user));
+          const user = await api.getUserLogged(localStorage.getItem('accessToken'));
+          dispatch(setAuthUserActionCreator(user));
         });
     } catch (error) {
       alert(error.message);
@@ -46,7 +46,7 @@ function asyncSetAuthUser({ email, password }) {
 
 function asyncUnsetAuthUser() {
   return (dispatch) => {
-    api.setAccessToken('');
+    api.setAccessToken(null);
     dispatch(unsetAuthUserActionCreator());
   };
 }

@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import postedAt from '../../utils';
 import ActionButton from '../action/ActionButton';
-import { detailDTO } from '../../utils/dto';
+import { detailDTO, userDTO } from '../../utils/dto';
 
-const ThreadDetailFooter = ({ detail, like, dislike }) => {
+const ThreadDetailFooter = ({
+  authUser, detail, like, dislike,
+}) => {
   const {
     owner, createdAt, upVotesBy, downVotesBy,
   } = detail;
@@ -12,10 +14,16 @@ const ThreadDetailFooter = ({ detail, like, dislike }) => {
   return (
     <footer className="thread-footer">
       <ActionButton
-        upVotesCount={upVotesBy.length}
-        downVotesCount={downVotesBy.length}
-        like={like}
-        dislike={dislike}
+        authUser={authUser}
+        type="like"
+        count={upVotesBy.length}
+        likeOrDislike={like}
+      />
+      <ActionButton
+        authUser={authUser}
+        type="dislike"
+        count={downVotesBy.length}
+        likeOrDislike={dislike}
       />
       <div className="owner-info">
         <span>
@@ -29,6 +37,7 @@ const ThreadDetailFooter = ({ detail, like, dislike }) => {
   );
 };
 ThreadDetailFooter.propTypes = {
+  authUser: PropTypes.shape(userDTO),
   detail: PropTypes.shape(detailDTO),
   like: PropTypes.func,
   dislike: PropTypes.func,

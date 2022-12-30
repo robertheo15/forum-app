@@ -1,49 +1,58 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FcLike, FcDislike } from 'react-icons/fc';
+import { userDTO } from '../../utils/dto';
+
+const Container = styled.button`
+    align-items: center;
+    background-color: initial;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    svg {
+      font-size: 18px;
+      margin-right: 4px;
+    }
+`;
 
 const ActionButton = ({
-  id, upVotesCount, downVotesCount, like, dislike,
+  id, type, count, likeOrDislike, authUser,
 }) => {
-  const {
-    authUser,
-  } = useSelector((states) => states);
-
   if (authUser === null || authUser === undefined) {
     return (
-      <>
-        <button type="button" className="thread-upvote__button" onClick={() => alert('You must be logged in to vote.')}>
-          <FcLike />
-          <span className="thread-upvote__label">{upVotesCount}</span>
-        </button>
-        <button type="button" className="thread-downvote__button" onClick={() => alert('You must be logged in to vote.')}>
-          <FcDislike />
-          <span className="thread-downvote__label">{downVotesCount}</span>
-        </button>
-      </>
+      <Container
+        type="button"
+        onClick={() => alert('You must be logged in to vote.')}
+      >
+        {
+          type === 'like' ? <FcLike />
+            : <FcDislike />
+        }
+        <span>{count}</span>
+      </Container>
     );
   }
   return (
-    <>
-      <button type="button" className="thread-upvote__button" onClick={() => like({ id })}>
-        <FcLike />
-        <span className="thread-upvote__label">{upVotesCount}</span>
-      </button>
-      <button type="button" className="thread-downvote__button" onClick={() => dislike({ id })}>
-        <FcDislike />
-        <span className="thread-downvote__label">{downVotesCount}</span>
-      </button>
-    </>
+    <Container
+      type="button"
+      onClick={() => likeOrDislike({ id })}
+    >
+      {
+        type === 'like' ? <FcLike />
+          : <FcDislike />
+      }
+      <span>{count}</span>
+    </Container>
   );
 };
 
 ActionButton.propTypes = {
   id: PropTypes.string,
-  upVotesCount: PropTypes.number,
-  downVotesCount: PropTypes.number,
-  like: PropTypes.func,
-  dislike: PropTypes.func,
+  count: PropTypes.number,
+  likeOrDislike: PropTypes.func,
+  type: PropTypes.string,
+  authUser: PropTypes.shape(userDTO),
 };
 
 export default ActionButton;

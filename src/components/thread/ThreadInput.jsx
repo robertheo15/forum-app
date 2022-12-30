@@ -21,6 +21,7 @@ const ThreadInput = ({ onCreate }) => {
           className="input-body"
           contentEditable
           onInput={onChange}
+          data-testid="input-body"
         />
         <button type="button" onClick={() => onCreate({ title, category, body })}>Buat</button>
       </form>

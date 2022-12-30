@@ -45,6 +45,7 @@ const DetailPage = () => {
       <ThreadDetailHeader detail={threadDetail} />
       <ThreadDetailContent detail={threadDetail} />
       <ThreadDetailFooter
+        authUser={authUser}
         like={onLike}
         dislike={onDislike}
         detail={threadDetail}

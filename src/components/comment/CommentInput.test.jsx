@@ -16,6 +16,7 @@ describe('CommentInput component', () => {
     // Arrange
     render(<CommentInput onCreateComment={() => {}} />);
     const commentInput = await screen.getByTestId('comment-input__field');
+
     // Action
     await userEvent.click(commentInput);
     await userEvent.keyboard('test');

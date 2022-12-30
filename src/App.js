@@ -5,7 +5,6 @@ import BottomNavigation from './components/navigation/BottomNavigation';
 import ForumHeader from './components/header/ForumHeader';
 import Loading from './components/loading/LoadingBar';
 import { asyncUnsetAuthUser } from './states/auth/action';
-import './styles/App.css';
 import { asyncPreloadProcess } from './states/isPreload/action';
 
 const App = () => {
